@@ -1,24 +1,24 @@
-import { UserRepository } from './user.repository';
-import { UserService } from './user.service';
+import { CommentRepository } from './comment.repository';
+import { CommentService } from './comment.service';
 
 describe('CommentService', () => {
-  let service: UserService;
-  let repository: UserRepository;
+  let service: CommentService;
+  let repository: CommentRepository;
 
   beforeAll(async () => {
     repository = {} as any;
-    service = new UserService(repository);
+    service = new CommentService(repository);
   });
 
   describe('getById', () => {
     it('should call and return repository.findOne with id passed in param', async () => {
       const id = 'monId';
-      const user = { name: 'toto' };
-      repository.findOne = jest.fn().mockResolvedValue(user);
+      const comment = { name: 'toto' };
+      repository.findOne = jest.fn().mockResolvedValue(comment);
 
       const result = await service.getById(id);
 
-      expect(result).toBe(user);
+      expect(result).toBe(comment);
       expect(repository.findOne).toHaveBeenCalledWith(id);
     });
   });
