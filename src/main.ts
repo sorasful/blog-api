@@ -11,6 +11,7 @@ async function bootstrap() {
     .setVersion('0.1')
     .addTag('Blog')
     .build();
+
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
 
