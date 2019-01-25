@@ -8,6 +8,9 @@ type EnvType =
   | 'DB_HOST'
   | 'DB_USER'
   | 'DB_PWD'
+  | 'SECRET_KEY'
+  | 'DEFAULT_EXPIRTION'
+  | 'AUTH_ALGORITHM'
   | 'PORT';
 
 @Injectable()
