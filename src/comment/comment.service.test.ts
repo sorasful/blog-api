@@ -1,7 +1,7 @@
 import { CommentRepository } from './comment.repository';
 import { CommentService } from './comment.service';
 
-describe('CommentService', () => {
+describe('ArticleService', () => {
   let service: CommentService;
   let repository: CommentRepository;
 
