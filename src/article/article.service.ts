@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, Optional } from '@nestjs/common';
 import { Repository } from "typeorm";
 import { UserService } from '../user/user.service'
 import { ArticlePostInDTO } from "./article.dto";
@@ -11,6 +11,7 @@ export class ArticleService {
     @Inject(ArticleRepository)
     private readonly articleRepository: ArticleRepository,
 
+    @Optional()
     @Inject(UserService)
     private readonly userService: UserService
   ) {}
