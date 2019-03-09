@@ -5,7 +5,6 @@ import { UserService } from '../user/user.service';
 describe('ArticleService', () => {
   let service: ArticleService;
   let repository: ArticleRepository;
-  let userService: UserService;
 
   beforeAll(async () => {
     repository = {} as any;
