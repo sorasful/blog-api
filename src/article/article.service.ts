@@ -40,4 +40,23 @@ export class ArticleService {
   async getById(id: string) {
     return this.articleRepository.findOne(id);
   }
+
+  async findAll() {
+    const take = 10; // for pagination
+    const skip = 0;
+
+    const [result, total] = await this.articleRepository.findAndCount(
+        {
+            where: {},
+            take: take,
+            skip: skip
+        }
+    );
+
+    return {
+        data: result,
+        count: total
+    };
+}
+
 }
