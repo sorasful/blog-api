@@ -12,8 +12,8 @@ describe('ArticleService', () => {
 
   describe('getById', () => {
     it('should call and return repository.findOne with id passed in param', async () => {
-      const id = 'monId';
-      const user = { name: 'toto' };
+      const id = '5035c0aa-5c87-4d1f-8aac-862b334dbf02';
+      const user = { name: 'toto', email: 'test@test.fr' };
       repository.findOne = jest.fn().mockResolvedValue(user);
 
       const result = await service.getById(id);
