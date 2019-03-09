@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './entity/user.entity';
 import { UserRepository } from './user.repository';
-import { UserPostInDTO } from '../user/user.dto';
+import { UserPostInDTO, UserUpdateInDTO } from '../user/user.dto';
 
 @Injectable()
 export class UserService {
@@ -23,7 +23,6 @@ export class UserService {
    /**
    * Insert a user
    *
-   * @returns Resolves with Article
    */
   async create(user: UserPostInDTO) {
     let user_to_persist = new User();
@@ -35,6 +34,22 @@ export class UserService {
 
     return this.userRepository.insert(user_to_persist);
   }
+
+     /**
+   * Update a user
+   *
+   */
+  async update(user: UserUpdateInDTO) {
+    let user_to_update = await this.getById(user.id);
+    user_to_update.email = user.email;
+    user_to_update.firstName = user.first_name;
+    user_to_update.lastName = user.last_name;
+    user_to_update.mobilePhone = user.mobile_phone;
+    user_to_update.password = user.password;
+
+    return this.userRepository.save(user_to_update);
+  }
+
 
 
 
