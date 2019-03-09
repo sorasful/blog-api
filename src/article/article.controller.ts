@@ -15,6 +15,14 @@ export class ArticleController {
     return this.articleService.getById(id);
   }
 
+  @Get()
+  @ApiResponse({status : HttpStatus.OK, description:'Articles found and retrieved'} )
+  @ApiResponse({status : HttpStatus.NOT_FOUND, description:'Articles not found'})
+  async findAll() {
+    return this.articleService.findAll();
+  }
+
+
   @Post()
   @ApiResponse({status : HttpStatus.CREATED, description:'Article created'} )
   @ApiResponse({status : HttpStatus.BAD_REQUEST, description:'Error in data send to create article'})
