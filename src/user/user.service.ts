@@ -50,6 +50,12 @@ export class UserService {
     return this.userRepository.save(user_to_update);
   }
 
+  /*
+  * Delete a user
+   */
+    async deleteById(id: string) {
+    return this.userRepository.delete(id);
+  }
 
 
 

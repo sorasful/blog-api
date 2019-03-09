@@ -28,7 +28,7 @@ export class Article {
   @Column({ type: 'integer', name: 'dislikes'})
   dislikes: number;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete: 'CASCADE' })
   @JoinColumn()
   author: User;
 

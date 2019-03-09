@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Delete, HttpStatus, Param, Post } from '@nestjs/common';
 import { UserService } from './user.service';
 import {ApiUseTags, ApiResponse} from '@nestjs/swagger';
 import { UserPostInDTO, UserUpdateInDTO } from '../user/user.dto';
@@ -16,6 +16,14 @@ export class UserController {
     return this.userService.getById(id);
   }
 
+  @Delete(':id')
+  @ApiResponse({status : HttpStatus.NO_CONTENT, description:'User found and retrieved'} )
+  @ApiResponse({status : HttpStatus.NOT_FOUND, description:'User not found'})
+  async deleteById(@Param('id') id: string) {
+    return this.userService.deleteById(id);
+  }
+
+
   @Post()
   @ApiResponse({status : HttpStatus.CREATED, description:'User created'} )
   @ApiResponse({status : HttpStatus.BAD_REQUEST, description:'Error in data send to create user'})
@@ -23,7 +31,7 @@ export class UserController {
     return this.userService.create(user);
   }
 
-   @Post('update')
+  @Post('update')
   @ApiResponse({status : HttpStatus.NO_CONTENT, description:'User updated'} )
   @ApiResponse({status : HttpStatus.BAD_REQUEST, description:'Error in data send to update user'})
   async update(@Body() user: UserUpdateInDTO) {
