@@ -1,7 +1,8 @@
 import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import {ApiUseTags, ApiResponse} from '@nestjs/swagger';
-import { ArticlePostInDTO } from './article.dto';
+import { ArticlePostInDTO, ArticleUpdateInDTO } from './article.dto';
+import { UserUpdateInDTO } from '../user/user.dto';
 
 @ApiUseTags('Article')
 @Controller('article')
@@ -22,6 +23,12 @@ export class ArticleController {
     return this.articleService.findAll();
   }
 
+  @Post('update')
+  @ApiResponse({status : HttpStatus.NO_CONTENT, description:'Article updated'} )
+  @ApiResponse({status : HttpStatus.BAD_REQUEST, description:'Error in data send to update article'})
+  async update(@Body() article: ArticleUpdateInDTO) {
+    return this.articleService.update(article);
+  }
 
   @Post()
   @ApiResponse({status : HttpStatus.CREATED, description:'Article created'} )
