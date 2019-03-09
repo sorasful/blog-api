@@ -1,9 +1,10 @@
 import { Inject, Injectable, Optional } from '@nestjs/common';
 import { Repository } from "typeorm";
 import { UserService } from '../user/user.service'
-import { ArticlePostInDTO } from "./article.dto";
+import { ArticlePostInDTO, ArticleUpdateInDTO } from "./article.dto";
 import { ArticleRepository } from "./article.repository";
 import { Article } from "./entity/article.entity";
+import { UserUpdateInDTO } from '../user/user.dto';
 
 @Injectable()
 export class ArticleService {
@@ -59,5 +60,18 @@ export class ArticleService {
         count: total
     };
 }
+
+   /**
+   * Update a article
+   *
+   */
+  async update(article: ArticleUpdateInDTO) {
+    let article_to_update = await this.getById(article.id);
+    article_to_update.content = article.content;
+    article_to_update.title = article.title;
+
+    return this.articleRepository.save(article_to_update);
+  }
+
 
 }

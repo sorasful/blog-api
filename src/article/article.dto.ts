@@ -6,6 +6,12 @@ export class ArticlePostInDTO {
     author_id: string;
 }
 
+export class ArticleUpdateInDTO {
+    content: string;
+    title: string;
+    id: string;
+}
+
 export class ArticlePostOutDTO {
     content: string;
 }
