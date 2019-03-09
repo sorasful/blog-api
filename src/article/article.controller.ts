@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import {ApiUseTags, ApiResponse} from '@nestjs/swagger';
 import { ArticlePostInDTO, ArticleUpdateInDTO } from './article.dto';
@@ -37,4 +37,14 @@ export class ArticleController {
     console.log(article);
     return this.articleService.create(article);
   }
+
+  @Delete(':id')
+  @ApiResponse({status : HttpStatus.NO_CONTENT, description:'Article found and retrieved'} )
+  @ApiResponse({status : HttpStatus.NOT_FOUND, description:'Article not found'})
+  async deleteById(@Param('id') id: string) {
+    return this.articleService.deleteById(id);
+  }
+
+
+
 }

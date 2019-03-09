@@ -74,4 +74,12 @@ export class ArticleService {
   }
 
 
+  /*
+  * Delete a article
+   */
+    async deleteById(id: string) {
+    return this.articleRepository.delete(id);
+  }
+
+
 }
