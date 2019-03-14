@@ -3,14 +3,19 @@ import { ArticleService } from './article.service';
 import { UserService } from '../user/user.service';
 import { ArticleUpdateInDTO } from "./article.dto";
 import { Article } from "./entity/article.entity";
+import { User } from '../user/entity/user.entity';
+import { UserRepository } from 'src/user/user.repository';
 
 describe('ArticleService', () => {
   let service: ArticleService;
   let repository: ArticleRepository;
+  let userRepo: UserRepository;
   let userService:UserService;
 
   beforeAll(async () => {
     repository = {} as any;
+    userRepo = {} as any;
+    userService = new UserService(userRepo)
     service = new ArticleService(repository, userService);
   });
 
@@ -33,7 +38,7 @@ describe('ArticleService', () => {
 
       repository.find = jest.fn().mockResolvedValue(articles);
 
-      const result = await service.findAll();
+      const result = await service.findAllPagined();
 
       expect(result).toEqual(articles);
     });
@@ -78,5 +83,24 @@ describe('update', () => {
 
 });
 
+describe('findAllByUser', async () => {
+  it('Should call and return repository.find with author id passed in param', async () => {
+    const author1Id = 'raccoonId'
+    let listeArticles = []
+    let index: number
+    let autho = new User()
+
+    for (index = 0; index < 5; index++) {
+      listeArticles.push(new Article({ title: 'Article racc' + index, author: autho }))
+    }
+
+    repository.find = jest.fn().mockResolvedValue(listeArticles)
+    userService.getById = jest.fn().mockResolvedValue(autho)
+    
+    const result = await service.findAllByUser(author1Id)
+
+    expect(result).toBe(listeArticles)
+  })
+})
 
 });
