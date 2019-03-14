@@ -4,7 +4,11 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { getOrDefault, getCopyConstructions } from '../../utils/copy-constructor.tools';
+import { Article } from '../../article/entity/article.entity';
+import { Comment } from '../../comment/entity/comment.entity';
 
 @Entity()
 export class User {
@@ -12,6 +16,12 @@ export class User {
   @CreateDateColumn()
   created: Date;
 
+  @OneToMany(type => Article, article => article.author)
+  articles: Article[]
+
+  @OneToMany(type => Comment, comment => comment.author)
+  comments: Comment[]
+  
   @Column({ type: 'varchar', name: 'email', length: 200 })
   email: string;
 
@@ -27,8 +37,24 @@ export class User {
   @Column({ type: 'varchar', name: 'password' })
   password: string;
 
+  @Column({ type: 'varchar', name: 'avatar', nullable: true })
+  avatar: Buffer | File
+
   @UpdateDateColumn()
   updated: Date;
+
   @PrimaryGeneratedColumn('uuid', { name: 'user_id' })
   userId: string;
+
+  constructor(copy: Partial<User> = {}) {
+    this.articles = getCopyConstructions(Article, copy.articles) as any
+    this.password = getOrDefault(copy.password, undefined)
+    this.email = getOrDefault(copy.email, undefined) as any
+    this.userId = getOrDefault(copy.userId, undefined) as any
+    this.lastName = getOrDefault(copy.lastName, undefined)
+    this.mobilePhone = getOrDefault(copy.mobilePhone, undefined)
+    this.comments = getCopyConstructions(Comment, copy.comments) as any
+    this.avatar = getOrDefault(copy.avatar, undefined)
+    this.firstName = getOrDefault(copy.firstName, undefined)
+  }
 }

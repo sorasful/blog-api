@@ -11,5 +11,4 @@ export class SignInDto {
     @IsDefined()
     @ApiModelProperty()
     password: string;
-
 }

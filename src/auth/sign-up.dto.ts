@@ -1,7 +1,7 @@
 import { ApiModelProperty } from "@nestjs/swagger";
 import { IsDefined, IsEmail, IsString, MaxLength } from "class-validator";
 
-export class SignInDto {
+export class SignUpDto {
   @IsEmail()
   @IsDefined()
   @ApiModelProperty()
@@ -22,4 +22,9 @@ export class SignInDto {
   @MaxLength(31)
   @ApiModelProperty()
   mobilePhone: string;
+
+  @IsEmail()
+  @IsDefined()
+  @ApiModelProperty()
+  password: string;
 }

@@ -1,11 +1,13 @@
 import { UserRepository } from './user.repository';
 import { UserService } from './user.service';
 import { User } from './entity/user.entity';
-import { UserPostInDTO, UserUpdateInDTO } from '../user/user.dto';
+import { UserUpdateInDTO } from '../user/user.dto';
+import { Functions } from '../utils/function';
 
 describe('UserService', () => {
   let service: UserService;
   let repository: UserRepository;
+  let avatar: string = Functions.getRaccoonMignon();
 
   beforeAll(async () => {
     repository = {} as any;
@@ -34,6 +36,7 @@ describe('update', () => {
         userDTO.last_name = 'me';
         userDTO.mobile_phone = 'xxxx';
         userDTO.id = '5035c0aa-5c87-4d1f-8aac-862b334dbf02';
+        userDTO.avatar = Buffer.from(avatar);
 
         let user = new User();
         user.email = 'tested@t.fr';
@@ -41,10 +44,11 @@ describe('update', () => {
         user.lastName = 'me';
         user.mobilePhone = 'xxxx';
         user.userId = '5035c0aa-5c87-4d1f-8aac-862b334dbf02';
+        user.avatar = Buffer.from(avatar);
 
-        service.update = jest.fn().mockResolvedValue(user);
+        repository.save = jest.fn().mockResolvedValue(user);
 
-        const result = await service.update(userDTO);
+        const result = await service.update(user);
 
         expect(result).toBe(user);
     });
