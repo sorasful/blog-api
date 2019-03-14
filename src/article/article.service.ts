@@ -23,9 +23,18 @@ export class ArticleService {
    * @returns Resolves with Article
    */
   async create(article: Partial<Article>) {
-    return this.articleRepository.insert(article);
+    return this.articleRepository.save(article);
   }
 
+  /**
+   * Insert a articles
+   *
+   * @returns Resolves with Article
+   */
+  async createList(articles: Partial<Article>[]) {
+    return this.articleRepository.save(articles);
+  }
+  
   /**
    * Returns a article identified by its id
    *
@@ -46,12 +55,30 @@ export class ArticleService {
     return this.articleRepository.findOne({ where: { title: nameArticle }});
   }
 
-  async findAll() {
-    const take = 10;
+  /**
+   * Returns a article identified by its title
+   *
+   * @param id - article id
+   * @returns Resolves with Article
+   */
+  async findAllPagined() {
+    const take = 20;
     const skip = 0;
     const result = await this.articleRepository.find({ take: take, skip: skip })
 
     return result
+  }
+
+
+  /**
+   * Returns a article identified by its title
+   *
+   * @param id - article id
+   * @returns Resolves with Article
+   */
+  async findAllByUser(userId: string) {
+    let author = await this.getById(userId);
+    return await this.articleRepository.find({})
   }
 
    /**
@@ -73,6 +100,4 @@ export class ArticleService {
     async deleteById(id: string) {
     return this.articleRepository.delete(id);
   }
-
-
 }

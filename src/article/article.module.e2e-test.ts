@@ -81,4 +81,36 @@ describe('ArticleController (e2e)', () => {
         })
     })
   })
+
+  describe('Get articles by author', async () => {
+    let listeArticle = []
+    beforeAll(async () => {
+      let index: number
+      let articleToCreate: Article
+
+      for (index = 1; index <= 5; index++) {
+        articleToCreate = new Article({
+          title: 'My raccoon is the best ' + index,
+          content: 'Les raccoon sont les plus beaux animaux de la terre',
+          comments: [],
+          author: user,
+        })
+
+        listeArticle.push(articleToCreate)
+      }
+
+      return request(app.getHttpServer())
+        .post('/article/createList')
+        .send(listeArticle)
+    })
+
+    it('/article/author/:id', async () => {
+      return request(app.getHttpServer())
+        .get('/article/author/' + user.userId)
+        .expect(200)
+        .then(res => {
+          expect(res.body.length).toEqual(6)
+        })
+    })
+  })
 })

@@ -27,7 +27,14 @@ export class ArticleController {
   @ApiResponse({status : HttpStatus.OK, description:'Articles found and retrieved'} )
   @ApiResponse({status : HttpStatus.NOT_FOUND, description:'Articles not found'})
   async findAll() {
-    return this.articleService.findAll();
+    return this.articleService.findAllPagined();
+  }
+
+  @Get('author/:id')
+  @ApiResponse({status : HttpStatus.OK, description:'Articles found and retrieved'} )
+  @ApiResponse({status : HttpStatus.NOT_FOUND, description:'Articles not found'})
+  async findAllByUser(@Param(':id') id: string) {
+    return this.articleService.findAllByUser(id);
   }
 
   @Post('update')
@@ -42,6 +49,13 @@ export class ArticleController {
   @ApiResponse({status : HttpStatus.BAD_REQUEST, description:'Error in data send to create article'})
   async create(@Body() article: ArticlePostInDTO) {
     return this.articleService.create(article);
+  }
+
+  @Post('createList')
+  @ApiResponse({status : HttpStatus.CREATED, description:'Article created'} )
+  @ApiResponse({status : HttpStatus.BAD_REQUEST, description:'Error in data send to create article'})
+  async createList(@Body() articles: ArticlePostInDTO[]) {
+    return this.articleService.createList(articles);
   }
 
   @Delete(':id')

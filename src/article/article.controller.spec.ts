@@ -1,5 +1,7 @@
 import { ArticleController } from './article.controller';
 import { ArticleService } from './article.service';
+import { User } from '../user/entity/user.entity';
+import { Article } from './entity/article.entity';
 
 describe('Article Controller', () => {
   let controller: ArticleController;
@@ -22,4 +24,24 @@ describe('Article Controller', () => {
       expect(service.getById).toHaveBeenCalledWith(id);
     });
   });
+
+
+describe('findAllByUser', async () => {
+  it('Should call and return repository.find with author id passed in param', async () => {
+    const raccoonId = 'raccoonId'
+    let listeArticles = []
+    let index: number
+    let autho = new User()
+
+    for (index = 0; index < 5; index++) {
+      listeArticles.push(new Article({ title: 'Article racc' + index, author: autho }))
+    }
+
+    service.findAllByUser = jest.fn().mockResolvedValue(listeArticles)
+    
+    const result = await service.findAllByUser(raccoonId)
+
+    expect(result).toBe(listeArticles)
+  })
+})
 });
