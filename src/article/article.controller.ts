@@ -16,6 +16,13 @@ export class ArticleController {
     return this.articleService.getById(id);
   }
 
+  @Get('getByTitle/:nom')
+  @ApiResponse({status : HttpStatus.OK, description:'Article found and retrieved'} )
+  @ApiResponse({status : HttpStatus.NOT_FOUND, description:'Article not found'})
+  async getByTitle(@Param('nom') nomArticle: string) {
+    return this.articleService.getByTitle(nomArticle);
+  }
+
   @Get()
   @ApiResponse({status : HttpStatus.OK, description:'Articles found and retrieved'} )
   @ApiResponse({status : HttpStatus.NOT_FOUND, description:'Articles not found'})
@@ -34,7 +41,6 @@ export class ArticleController {
   @ApiResponse({status : HttpStatus.CREATED, description:'Article created'} )
   @ApiResponse({status : HttpStatus.BAD_REQUEST, description:'Error in data send to create article'})
   async create(@Body() article: ArticlePostInDTO) {
-    console.log(article);
     return this.articleService.create(article);
   }
 

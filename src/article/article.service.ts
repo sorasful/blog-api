@@ -22,15 +22,8 @@ export class ArticleService {
    *
    * @returns Resolves with Article
    */
-  async create(article: ArticlePostInDTO) {
-    let article_to_persist = new Article();
-    article_to_persist.content = article.content;
-    article_to_persist.title = article.title;
-    article_to_persist.dislikes = article.dislikes;
-    article_to_persist.likes = article.likes;
-    article_to_persist.author = await this.userService.getById(article.author_id);
-
-    return this.articleRepository.insert(article_to_persist);
+  async create(article: Partial<Article>) {
+    return this.articleRepository.insert(article);
   }
 
   /**
@@ -41,6 +34,16 @@ export class ArticleService {
    */
   async getById(id: string) {
     return this.articleRepository.findOne(id);
+  }
+
+  /**
+   * Returns a article identified by its title
+   *
+   * @param id - article id
+   * @returns Resolves with Article
+   */
+  async getByTitle(nameArticle: string) {
+    return this.articleRepository.findOne({ where: { title: nameArticle }});
   }
 
   async findAll() {
