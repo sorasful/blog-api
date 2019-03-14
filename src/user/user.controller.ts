@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Delete, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import {ApiUseTags, ApiResponse} from '@nestjs/swagger';
-import { UserPostInDTO, UserUpdateInDTO } from '../user/user.dto';
+import { UserPostInDTO, UserUpdateInDTO, UserUpdateRoleInDTO } from '../user/user.dto';
 import { User } from './entity/user.entity';
 
 
@@ -46,5 +46,10 @@ export class UserController {
     }));
   }
 
-
+  @Put('updateRole')
+  @ApiResponse({status : HttpStatus.NO_CONTENT, description:'User updated'} )
+  @ApiResponse({status : HttpStatus.BAD_REQUEST, description:'Error in data send to update user'})
+  async updateRole(@Body() userDto: UserUpdateRoleInDTO) {
+    return this.userService.updateRoleUser(userDto.userId, userDto.newRole);
+  }
 }

@@ -37,6 +37,9 @@ export class User {
   @Column({ type: 'varchar', name: 'password' })
   password: string;
 
+  @Column({ type: 'varchar', name: 'role', default: 'Utilisateur' })
+  role: string;
+
   @Column({ type: 'varchar', name: 'avatar', nullable: true })
   avatar: Buffer | File
 
@@ -54,6 +57,7 @@ export class User {
     this.lastName = getOrDefault(copy.lastName, undefined)
     this.mobilePhone = getOrDefault(copy.mobilePhone, undefined)
     this.comments = getCopyConstructions(Comment, copy.comments) as any
+    this.role = getOrDefault(copy.role, undefined)
     this.avatar = getOrDefault(copy.avatar, undefined)
     this.firstName = getOrDefault(copy.firstName, undefined)
   }

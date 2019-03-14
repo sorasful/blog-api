@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
-import { UserUpdateInDTO } from './user.dto';
+import { UserUpdateInDTO, UserUpdateRoleInDTO } from './user.dto';
 import { User } from './entity/user.entity';
 import { Functions } from '../utils/function';
 
@@ -30,13 +30,13 @@ describe('User Controller', () => {
 
 
 describe('update', () => {
-  it('should call and return repository.save for a updated user', async () => {
+  it('should call and return service.update for a updated user', async () => {
 
       let userDTO = new UserUpdateInDTO();
       userDTO.email = 'tested@test.fr';
-      userDTO.first_name = 'raccoon';
-      userDTO.last_name = 'me';
-      userDTO.mobile_phone = 'xxxx';
+      userDTO.firstName = 'raccoon';
+      userDTO.lastName = 'me';
+      userDTO.mobilePhone = 'xxxx';
       userDTO.id = '5035c0aa-5c87-4d1f-8aac-862b334dbf02';
       userDTO.avatar = Buffer.from(avatar);
 
@@ -55,5 +55,20 @@ describe('update', () => {
       expect(result).toBe(user);
   });
 
+});
+
+describe('Update user role', () => {
+  it('should call and return service.updateRoleUser', async () => {
+    const userUpdateDTO = new UserUpdateRoleInDTO() 
+    userUpdateDTO.userId = '3a1066dc-28c9-485f-a2b4-85fc231d263c'
+    userUpdateDTO.newRole = 'Autheur'
+
+    service.updateRoleUser = jest.fn().mockResolvedValue(new User({ role: userUpdateDTO.newRole }))
+
+    const result = await controller.updateRole(userUpdateDTO)
+
+    expect(result.role).toBe(userUpdateDTO.newRole)
+    expect(service.updateRoleUser).toHaveBeenCalledWith(userUpdateDTO.userId, userUpdateDTO.newRole)
+  });
 });
 });
