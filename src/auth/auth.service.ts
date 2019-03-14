@@ -122,12 +122,10 @@ export class AuthService {
     const user = await this.userService.getById(payload.uid);
 
     if (!user) {
-      return;
+      return
     }
 
-    return moment(user.tokenBoundary).isBefore(1000 * payload.iat)
-      ? user
-      : undefined;
+    return user
   }
 
   /**

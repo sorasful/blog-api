@@ -1,7 +1,7 @@
 import { ArticleRepository } from './article.repository';
 import { ArticleService } from './article.service';
 import { UserService } from '../user/user.service';
-import { ArticlePostInDTO, ArticleUpdateInDTO } from "./article.dto";
+import { ArticleUpdateInDTO } from "./article.dto";
 import { Article } from "./entity/article.entity";
 
 describe('ArticleService', () => {
@@ -29,10 +29,9 @@ describe('ArticleService', () => {
 
   describe('findAll', () => {
     it('should call and return repository.findAll', async () => {
-        let articles ={"count": {"content": "José est un poisson, comment va t-il se sortir de ce périple ?", "dislikes": 0, "likes": 10, "title": "Article 2: josé au kébab"}, "data": {"content": "José est un poisson, comment va t-il se sortir de ce périple ?", "dislikes": 0, "likes": 0, "title": "Article 1: josé à la pêche"}}
+      let articles = {"count": {"content": "José est un poisson, comment va t-il se sortir de ce périple ?", "dislikes": 0, "likes": 10, "title": "Article 2: josé au kébab"}, "data": {"content": "José est un poisson, comment va t-il se sortir de ce périple ?", "dislikes": 0, "likes": 0, "title": "Article 1: josé à la pêche"}}
 
-
-      repository.findAndCount = jest.fn().mockResolvedValue(articles);
+      repository.find = jest.fn().mockResolvedValue(articles);
 
       const result = await service.findAll();
 

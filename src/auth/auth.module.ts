@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { UserNestModule } from '../user/user.module'
+import { UserModule } from '../user/user.module'
 import { PassportModule } from '@nestjs/passport'
 import { JwtModule } from '@nestjs/jwt'
 import { configService } from '../config/config.service'
@@ -9,7 +9,7 @@ import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
-    UserNestModule,
+    UserModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secretOrPrivateKey: configService.getString('SECRET_KEY'),

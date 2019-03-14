@@ -29,7 +29,6 @@ export class Article {
   dislikes: number;
 
   @ManyToOne(type => User, { onDelete: 'CASCADE' })
-  @JoinColumn()
   author: User;
 
   @PrimaryGeneratedColumn('uuid', { name: 'article_id' })

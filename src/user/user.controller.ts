@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Delete, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Delete, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import {ApiUseTags, ApiResponse} from '@nestjs/swagger';
 import { UserPostInDTO, UserUpdateInDTO } from '../user/user.dto';
+import { User } from './entity/user.entity';
 
 
 @ApiUseTags('User')
@@ -24,18 +25,25 @@ export class UserController {
   }
 
 
-  @Post()
+  @Post('create')
   @ApiResponse({status : HttpStatus.CREATED, description:'User created'} )
   @ApiResponse({status : HttpStatus.BAD_REQUEST, description:'Error in data send to create user'})
   async create(@Body() user: UserPostInDTO) {
     return this.userService.create(user);
   }
 
-  @Post('update')
+  @Put('update')
   @ApiResponse({status : HttpStatus.NO_CONTENT, description:'User updated'} )
   @ApiResponse({status : HttpStatus.BAD_REQUEST, description:'Error in data send to update user'})
-  async update(@Body() user: UserUpdateInDTO) {
-    return this.userService.update(user);
+  async update(@Body() userDto: UserUpdateInDTO) {
+    return this.userService.update(new User({
+      email: userDto.email,
+      firstName: userDto.firstName,
+      lastName: userDto.lastName,
+      mobilePhone: userDto.mobilePhone,
+      userId: userDto.id,
+      avatar: userDto.avatar ? Buffer.from(userDto.avatar) : undefined
+    }));
   }
 
 

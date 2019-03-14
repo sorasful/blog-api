@@ -9,7 +9,7 @@ type EnvType =
   | 'DB_USER'
   | 'DB_PWD'
   | 'SECRET_KEY'
-  | 'DEFAULT_EXPIRTION'
+  | 'DEFAULT_EXPIRATION'
   | 'AUTH_ALGORITHM'
   | 'PORT';
 

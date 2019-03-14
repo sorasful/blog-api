@@ -44,22 +44,12 @@ export class ArticleService {
   }
 
   async findAll() {
-    const take = 10; // for pagination
+    const take = 10;
     const skip = 0;
+    const result = await this.articleRepository.find({ take: take, skip: skip })
 
-    const [result, total] = await this.articleRepository.findAndCount(
-        {
-            where: {},
-            take: take,
-            skip: skip
-        }
-    );
-
-    return {
-        data: result,
-        count: total
-    };
-}
+    return result
+  }
 
    /**
    * Update a article
