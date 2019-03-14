@@ -1,4 +1,4 @@
-import { INestApplication, HttpStatus } from '@nestjs/common'
+import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import { setupDB } from '../utils/setup.tools'
 import { UserModule } from './user.module'

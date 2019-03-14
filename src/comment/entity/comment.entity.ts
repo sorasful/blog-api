@@ -7,12 +7,17 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { User } from '../../user/entity/user.entity';
+import { Article } from '../../article/entity/article.entity';
+import { getOrDefault, getCopyConstruction } from '../../utils/copy-constructor.tools';
 
 @Entity()
 export class Comment {
 
   @ManyToOne(type => User, { onDelete: 'CASCADE' })
   author: User;
+  
+  @ManyToOne(type => Article, article => article.comments, { onDelete: "CASCADE" })
+  article: Article
   
   @CreateDateColumn()
   created: Date;
@@ -28,4 +33,11 @@ export class Comment {
 
   @PrimaryGeneratedColumn('uuid', { name: 'commentaire_id' })
   commentId: string;
+
+  constructor(copy: Partial<Comment> = {}) {
+    this.commentId = getOrDefault(copy.commentId, undefined) as any
+    this.author = getCopyConstruction(User, copy.author) as any
+    this.article = getCopyConstruction(Article, copy.article) as any
+    this.content = getOrDefault(copy.content, undefined)
+  }
 }
