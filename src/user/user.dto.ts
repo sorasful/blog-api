@@ -16,3 +16,8 @@ export class UserUpdateInDTO {
     avatar: Buffer;
 }
 
+export class UserUpdateRoleInDTO {
+    userId: string;
+    newRole: string;
+}
+

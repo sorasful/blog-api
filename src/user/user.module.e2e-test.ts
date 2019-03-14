@@ -8,7 +8,7 @@ import { AuthModule } from '../auth/auth.module'
 import { getConnection } from 'typeorm'
 import { UserRepository } from './user.repository'
 import { Functions } from '../utils/function';
-import { UserPostInDTO, UserUpdateInDTO } from './user.dto';
+import { UserPostInDTO, UserUpdateInDTO, UserUpdateRoleInDTO } from './user.dto';
 
 describe('UserNestController (e2e)', () => {
   let app: INestApplication
@@ -77,6 +77,22 @@ describe('UserNestController (e2e)', () => {
           expect(res.body.firstName).toEqual(userDTO.firstName)
           expect(res.body.lastName).toEqual(userDTO.lastName)
           expect(Buffer.from(res.body.avatar.data)).toEqual(userDTO.avatar)
+        })
+    })
+  })
+
+  describe('Update user role', async () => {
+    it('Update user role', async () => {
+      let userDTO = new UserUpdateRoleInDTO();
+      userDTO.userId = user.userId;
+      userDTO.newRole = 'Autheur';
+      
+      return request(app.getHttpServer())
+        .put('/user/updateRole')
+        .send(userDTO)
+        .expect(200)
+        .then(res => {
+          expect(res.body.role).toEqual('Autheur')
         })
     })
   })

@@ -44,6 +44,14 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
+  /**
+   * Update a user role
+   *
+   */
+  async updateRoleUser(userId: string, role: string) {
+    return this.userRepository.save(new User({ userId: userId, role: role }));
+  }
+
   /*
   * Delete a user
   */
